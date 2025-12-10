@@ -4,5 +4,8 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "cd client && npm run dev"
+  },
+  "dependencies": {
+    "moment": "^2.30.1"
   }
 }
