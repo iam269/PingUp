@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import { assets, dummyPostsData } from '../assets/assets'
 import StoriesBar from '../components/StoriesBar'
+import RecentMessages from '../components/RecentMessages'
 
 const Feed = () => {
 
@@ -35,7 +36,7 @@ const Feed = () => {
           <p className='text-slate-600'>Email marketing</p>
           <p className='text-slate-400'>Supercharge your marketing with a powerful, easy-to-use platform built for results.</p>
         </div>
-        <h1>Recent messages</h1>
+        <RecentMessages />
       </div>
     </div>
   ) : <Loading />
