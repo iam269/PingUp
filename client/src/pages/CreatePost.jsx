@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import { dummyUserData } from "../assets/assets";
-import { X } from "lucide-react";
+import { X, Image } from "lucide-react";
 import toast from 'react-hot-toast'
 
 const CreatePost = () => {
   const [content, setContent] = useState("");
-  const [images, setImages] = useState("");
-  const [loading, setLoading] = useState(flase);
+  const [images, setImages] = useState([]);
+  const loading = false;
 
   const user = dummyUserData;
 
@@ -15,7 +15,7 @@ const CreatePost = () => {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-white">
+    <div className="min-h-screen bg-linear-to-b from-slate-50 to-white">
       <div className="max-w-6xl mx-auto p-6">
         {/* Title */}
         <div className="mb-8">
@@ -48,7 +48,7 @@ const CreatePost = () => {
             value={content}
           />
           {/* Images */}
-          {images.localeCompare((image, i) => (
+          {images.map((image, i) => (
             <div key={i} className="relative group">
               <img
                 src={URL.createObjectURL(image)}
@@ -85,11 +85,11 @@ const CreatePost = () => {
           <button disabled={loading} onClick={()=>toast.promise(
             handleSubmit(),
             {
-              loading: 'uploading ...'
+              loading: 'uploading ...',
               success: <p>Post Added</p>,
               error: <p>Post Not Added</p>,
-            } 
-          )} className="text-sm bg-gradinet-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 active:scale-95 transition text-white font-medium px-8 py-2 rounded-md cursor-pointer">
+            }
+          )} className="text-sm bg-linear-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 active:scale-95 transition text-white font-medium px-8 py-2 rounded-md cursor-pointer">
             Publish Post
           </button>
         </div>

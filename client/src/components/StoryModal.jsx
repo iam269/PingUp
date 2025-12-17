@@ -1,8 +1,8 @@
-import { ArrowLeft, Sparkle, Upload } from "lucide-react";
+import { ArrowLeft, Sparkle, Upload, TextIcon } from "lucide-react";
 import React, { useState } from "react";
 import toast from "react-hot-toast";
 
-const StoryModal = ({setShowModal, fetchStories}) => {
+const StoryModal = ({setShowModal}) => {
   const bgColors = [
     "#4f46e5",
     "#7c3aed",
@@ -13,7 +13,6 @@ const StoryModal = ({setShowModal, fetchStories}) => {
   ];
 
   const [mode, setMode] = useState("text");
-  const [background, setBackground] = useState("");
   const [background, setBackground] = useState(bgColors[0]);
   const [text, setText] = useState("");
   const [media, setMedia] = useState(null);
@@ -32,7 +31,7 @@ const StoryModal = ({setShowModal, fetchStories}) => {
     <div className="fixed inset-0 z-110 min-h-screen bg-black/80 backdrop-blur text-white flex items-center justify-center p-4">
       <div className="w-full max-w-md">
         <div className="text-center mb-4 flex items-center justify-between">
-          <button onClick={()=> } className="text-white p-2 cursor-pointer">
+          <button onClick={() => setShowModal(false)} className="text-white p-2 cursor-pointer">
             <ArrowLeft />
           </button>
           <h2 className="text-lg font-semibold">Create Story</h2>
@@ -40,18 +39,16 @@ const StoryModal = ({setShowModal, fetchStories}) => {
         </div>
 
         <div className="rounded-lg h-96 flex items-center justify-center relative" style={{backgroundColor: background}}>
-          {mode === "text" &&(
-            <textarea className="bg-transparent text-white w-full h-full p-6 text-lg resize-one focus:outline-none" placeholder="What's on your mind?" onChange={(e)=>setText(e.target.value)} value={text}/>
+          {mode === "text" && (
+            <textarea className="bg-transparent text-white w-full h-full p-6 text-lg resize-none focus:outline-none" placeholder="What's on your mind?" onChange={(e) => setText(e.target.value)} value={text} />
           )}
-          {
-            mode === "image" && previewUrl && (
-              media?.type.startsWith('image')?(
-                <img src={previewUrl} alt="" className="object-contain max-h-full"/>
-              ): (
-                <video src={previewUrl} className="object-contain max-h-full" />
-              )
+          {mode === "media" && previewUrl && (
+            media?.type.startsWith('image') ? (
+              <img src={previewUrl} alt="" className="object-contain max-h-full" />
+            ) : (
+              <video src={previewUrl} className="object-contain max-h-full" />
             )
-          }
+          )}
         </div>
         <div className="flex mt-4 gap-2">
           {bgColors.map((color)=> (
@@ -71,7 +68,7 @@ const StoryModal = ({setShowModal, fetchStories}) => {
           loading: 'Saving...',
           success: <p>Story Added</p>,
           error: e => <p>{e.message}</p>,
-        })} className="flex items-center justify-center gap-2 text-white py-3 mt-4 w-full rounded bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 active:scale-95 transition cursor-pointer">
+        })} className="flex items-center justify-center gap-2 text-white py-3 mt-4 w-full rounded bg-linear-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 active:scale-95 transition cursor-pointer">
           <Sparkle size={18}/>Create Story
         </button>
       </div>

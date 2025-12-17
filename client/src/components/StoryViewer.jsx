@@ -1,51 +1,52 @@
 import { Badge, BadgeCheck, X } from "lucide-react";
-import React, {use, useState} from "react";
+import React, { useState, useEffect } from "react";
 
-const StoryViewer = ({ viewStory, setViewStory }) => {
+const StoryViewer = ({ stories, currentIndex, setCurrentIndex }) => {
+
+  if (currentIndex === null) return null;
+
+  const viewStory = stories[currentIndex];
 
   const [progress, setProgress] = useState(0);
 
-  useffect(() => {
+  useEffect(() => {
     let timer, progressInterval;
-    if(viewStory && viewStory.media_type !== 'video') {
-      setProgress(0);
+    if (viewStory && viewStory.media_type !== 'video') {
 
       const duration = 10000;
       const setTime = 100;
       let elapsed = 0;
-      progressInterval setInterval(() => {
+      progressInterval = setInterval(() => {
         elapsed += setTime;
         setProgress((elapsed / duration) * 100);
       }, setTime);
 
       //Close story after duration(10sec)
       timer = setTimeout(() => {
-        setViewStory(null);
+        setCurrentIndex(null);
       }, duration);
     }
 
     return () => {
       clearTimeout(timer);
       clearInterval(progressInterval);
-    }
+    };
 
-  },[viewStory],[setViewStory])
+  }, [currentIndex, setCurrentIndex]);
 
   const handleClose = () => {
-    setViewStory(null);
+    setCurrentIndex(null);
   }
-
-  if(!viewStory) return null;
 
   const renderContent = () => {
     switch(viewStory.media_type) {
       case 'image':
         return (
-          <img src={viewStory.media_url} alt="story" className="max-w-full max-h-screen object-contain"/>
+          <img src={viewStory.media_url} alt="story" className="w-full h-full object-contain"/>
         );
       case 'video':
         return (
-          <video onEnded={()=>} src={viewStory.media_url} controls className="max-h-screen autoPlay"/>
+          <video onEnded={() => setViewStory(null)} src={viewStory.media_url} controls autoPlay className="w-full h-full object-contain" />
         );
       case 'text':
         return (
@@ -61,16 +62,18 @@ const StoryViewer = ({ viewStory, setViewStory }) => {
   return (
     <div className="fixed inset-0 h-screen bg-black bg-opacity-90 z-110 flex items-center justify-center" style={{backgroundColor: viewStory.media_type === 'text' ? viewStory.background_color : '#000000'}}>
         {/* Progress Bar */}
-        <div className="absolute top-0 w-full h-1 bg-gray-700">
-            <div className="h-full bg-white transition-all duration-100 linear" style={{width: `${progress}%`}}>
+        {viewStory.media_type !== 'video' && (
+          <div className="absolute top-0 w-full h-1 bg-gray-700">
+              <div className="h-full bg-white transition-all duration-100 linear" style={{width: `${progress}%`}}>
 
-            </div>
-        </div>
+              </div>
+          </div>
+        )}
         {/* User Info -Top Left */}
         <div className="absolute top-4 left-4 items-center space-x-3 p-2 px-4 sm:p-4 sm:px-8 backdrop-blur-2xl rounded bg-black/50">
             <img src={viewStory.user?.profile_picture} alt="" className="size-7 sm:size-8 rounded-full object-cover border border-white"/>
-            <div>
-                <span>{viewStory.user?.full_name}</span>
+            <div className="flex items-center space-x-3">
+                <span className="text-white">{viewStory.user?.full_name}</span>
                 <BadgeCheck size={18}/>
             </div>
         </div>
@@ -80,7 +83,10 @@ const StoryViewer = ({ viewStory, setViewStory }) => {
         </button>
 
         {/* Content Wrapper */}
-        <div className="max-w-[90vw] max-h-[90vh] flex items-center justify-center">
+        <div className="w-full h-full flex items-center justify-center relative">
+          {/* Navigation areas */}
+          <div className="absolute left-0 top-0 bottom-0 w-1/2 z-10" onClick={() => { if (currentIndex > 0) setCurrentIndex(currentIndex - 1); }}></div>
+          <div className="absolute right-0 top-0 bottom-0 w-1/2 z-10" onClick={() => { if (currentIndex < stories.length - 1) setCurrentIndex(currentIndex + 1); else setCurrentIndex(null); }}></div>
           {renderContent()}
         </div>
     </div>
