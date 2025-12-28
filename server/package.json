@@ -1,0 +1,32 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "server": "nodemon server.js",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+<<<<<<< HEAD
+    "@clerk/express": "^1.7.60",
+=======
+    "@clerk/backend": "^2.29.0",
+    "@clerk/express": "^1.7.60",
+    "cloudinary": "^2.8.0",
+>>>>>>> 4f609148e22231a911e8b6ff902b38eccfbd16e3
+    "cors": "^2.8.5",
+    "dotenv": "^17.2.3",
+    "express": "^5.2.1",
+    "inngest": "^3.48.0",
+    "mongoose": "^9.0.2",
+    "multer": "^2.0.2"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.11"
+  }
+}
