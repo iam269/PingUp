@@ -285,6 +285,11 @@ This project is licensed under the MIT License - see the [LICENSE](LICENSE) file
 - Cloudinary for image management
 - All contributors and supporters
 
+## 📜 Credits
+
+This project is inspired by [GreatStack](https://greatstack.dev/p/pingup) MERN Social Media tutorial.
+All code is written by [Your Name]. Licensed under MIT License.
+
 ## 📞 Support
 
 If you have any questions or need help:
